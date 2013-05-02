@@ -23,7 +23,7 @@ class Json () {
         hasSeenFields = true
     }
 
-    fun String.kv(value: Int) {
+    fun String.eq(value: Int) {
         insertPotentialComma()
         builder.append("\"$this\":$value")
     }
@@ -57,7 +57,7 @@ class Json () {
     }
 
 
-    fun String.kv(content: Json.() -> Unit) {
+    fun String.eq(content: Json.() -> Unit) {
         insertPotentialComma()
         var subObject = Json()
         subObject.content()
@@ -65,7 +65,7 @@ class Json () {
     }
 
 
-    fun String.kv(a: String) : Unit {
+    fun String.eq(a: String) : Unit {
         insertPotentialComma()
         builder.append("\"$this\":\"$a\"")
     }
