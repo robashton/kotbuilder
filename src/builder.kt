@@ -23,19 +23,14 @@ class Json () {
         hasSeenFields = true
     }
 
-    fun kv(key: String, value: String) {
+    fun String.kv(value: Int) {
         insertPotentialComma()
-        builder.append("\"$key\":\"$value\"")
+        builder.append("\"$this\":$value")
     }
 
-    fun kv(key: String, value: Int) {
+    fun String.array(vararg value : Any) {
         insertPotentialComma()
-        builder.append("\"$key\":$value")
-    }
-
-    fun kv(key: String, vararg value : Any) {
-        insertPotentialComma()
-        builder.append("\"$key\":")
+        builder.append("\"$this\":")
         builder.append("[")
 
         var elements = ArrayList<String>()
@@ -61,20 +56,20 @@ class Json () {
 
     }
 
-    fun Int.renderJsonInterpretation(builder: StringBuilder) {
-        builder.append(this)
-    }
 
-    fun String.renderJsonInterpretation(builder: StringBuilder) {
-        builder.append("\"$this\"")
-    }
-
-    fun kv(key: String, content: Json.() -> Unit) {
+    fun String.kv(content: Json.() -> Unit) {
         insertPotentialComma()
         var subObject = Json()
         subObject.content()
-        builder.append("\"$key\":${subObject.toString()}")
+        builder.append("\"$this\":${subObject.toString()}")
     }
+
+
+    fun String.kv(a: String) : Unit {
+        insertPotentialComma()
+        builder.append("\"$this\":\"$a\"")
+    }
+
 
     fun toString() : String  {
         return "{" +  builder.toString() + "}"
