@@ -2,10 +2,14 @@
   <library name="KotlinJavaRuntime">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.9.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.9-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/src" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-4.9-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
