@@ -6,26 +6,81 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class JsonBuilder {
+import java.util.HashMap
+import java.util.List
+import java.util.ArrayList
+import jet.runtime.typeinfo.JetMethod
 
-}
+class Json () {
 
-class Json
+    var builder = StringBuilder()
+    var hasSeenFields = false
 
-fun json() {
+    private fun insertPotentialComma() {
+        if(hasSeenFields)
+            builder.append(",")
+        hasSeenFields = true
+    }
 
-}
+    fun kv(key: String, value: String) {
+        insertPotentialComma()
+        builder.append("\"$key\":\"$value\"")
+    }
 
-fun kv(key: Any, value: Any) {}
+    fun kv(key: String, value: Int) {
+        insertPotentialComma()
+        builder.append("\"$key\":$value")
+    }
 
-fun kv(key: Any, value: Json.() -> Unit) : Json {
-    val json = Json()
-    json.value()
-    return json;
-}
+    fun kv(key: String, vararg value : Any) {
+        insertPotentialComma()
+        builder.append("]")
 
-fun tst() {
-    kv("sheep") {
+        var elements = ArrayList<String>()
+
+        for(i in value) {
+            when(i) {
+                is Int ->
+                    elements.add(i.toString())
+                is String ->
+                    elements.add("\"$i\"")
+                is JetMethod -> {
+                    var method = i as JetMethod
+                    var subObject = Json()
+                    subObject.method()
+                    elements.add(subObject.toString())
+                }
+                else -> Exception("Zomg")
+            }
+        }
+        builder.append(elements.makeString(","))
+        builder.append("]")
 
     }
+
+    fun Int.renderJsonInterpretation(builder: StringBuilder) {
+        builder.append(this)
+    }
+
+    fun String.renderJsonInterpretation(builder: StringBuilder) {
+        builder.append("\"$this\"")
+    }
+
+    fun kv(key: String, content: Json.() -> Unit) {
+        insertPotentialComma()
+        var subObject = Json()
+        subObject.content()
+        builder.append("\"$key\":${subObject.toString()}")
+    }
+
+    fun toString() : String  {
+        return "{" +  builder.toString() + "}"
+    }
 }
+
+fun json(content: Json.() -> Unit) : String {
+    var json = Json()
+    json.content()
+    return json.toString()
+}
+

@@ -11,10 +11,6 @@ import kotlin.test.*
 
 
 public class SomeTest {
-    spec fun can_create_builder() {
-       var builder = JsonBuilder()
-       assertNotNull(builder)
-    }
 
     spec fun can_pass_in_empty_literal() {
         var result = json {
@@ -23,10 +19,43 @@ public class SomeTest {
         assertEquals(result, "{}")
     }
 
-    spec fun can_pass_in_key_value_pair() {
-        var result = kv("foo", "bar")
-        assertEquals(result, "\"foo\":\"bar\"")
+    spec fun can_create_key_value_pair_with_string() {
+        var result = json {
+            kv("name", "rob")
+        }
+        assertEquals(result, "{\"name\":\"rob\"}")
     }
 
+    spec fun can_create_key_value_pair_with_integer() {
+        var result = json {
+            kv("name", 1337)
+        }
+        assertEquals(result, "{\"name\":1337}")
+    }
 
+    spec fun can_create_key_value_pair_with_json_value() {
+        var result = json {
+            kv("name") {
+
+            }
+        }
+        assertEquals(result, "{\"name\":{}}")
+    }
+
+    spec fun can_create_two_key_value_pair_with_strings() {
+        var result = json {
+            kv("name", "rob")
+            kv("name", "robbie")
+        }
+        assertEquals(result, "{\"name\":\"rob\",\"name\":\"robbie\"}")
+    }
+
+    spec fun can_create_key_value_with_array_value() {
+        var result = json {
+            kv("name", "foo", 1337, {
+
+            })
+        }
+        assertEquals(result, "{\"name\":[\"foo\",1337,{}]}")
+    }
 }
