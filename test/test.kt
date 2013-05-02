@@ -15,4 +15,18 @@ public class SomeTest {
        var builder = JsonBuilder()
        assertNotNull(builder)
     }
+
+    spec fun can_pass_in_empty_literal() {
+        var result = json {
+
+        }
+        assertEquals(result, "{}")
+    }
+
+    spec fun can_pass_in_key_value_pair() {
+        var result = kv("foo", "bar")
+        assertEquals(result, "\"foo\":\"bar\"")
+    }
+
+
 }
