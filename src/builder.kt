@@ -6,7 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class JsonBuilder {
+class JsonSpec(var jsonData : StringBuilder) {
+    fun kv(key : String, value : String)
+    {
+        jsonData.append("$key:\"$value\"")
+
+    }
+
+    fun kv(key : String, value : JsonSpec.() -> Unit)
+    {
+        jsonData.append("$key:[${this.value()}}]")
+    }
+}
+
+fun json(jsonSpec : JsonSpec.() -> Unit) {
 
 }
 

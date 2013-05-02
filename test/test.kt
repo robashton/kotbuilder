@@ -11,11 +11,6 @@ import kotlin.test.*
 
 
 public class SomeTest {
-    spec fun can_create_builder() {
-       var builder = JsonBuilder()
-       assertNotNull(builder)
-    }
-
     spec fun can_pass_in_empty_literal() {
         var result = json {
 
@@ -24,9 +19,13 @@ public class SomeTest {
     }
 
     spec fun can_pass_in_key_value_pair() {
-        var result = kv("foo", "bar")
+        var result = json {
+            kv("foo", "bar")
+
+            kv("goo2", {
+                kv("hello", "hello2")
+            })
+        }
         assertEquals(result, "\"foo\":\"bar\"")
     }
-
-
 }
