@@ -46,11 +46,13 @@ class Json () {
                     elements.add(i.toString())
                 is String ->
                     elements.add("\"$i\"")
-                else -> {
+                is Function0<*> -> {
                     var subObject = Json()
-                    var method = i.javaClass.getMethods()[0]
-                    method.invoke(i)
+                    i.invoke()
                     elements.add(subObject.toString())
+                }
+                else -> {
+                    throw Exception("OMG NO!")
                 }
             }
         }
