@@ -22,23 +22,3 @@ class JsonSpec(var jsonData : StringBuilder) {
 fun json(jsonSpec : JsonSpec.() -> Unit) {
 
 }
-
-class Json
-
-fun json() {
-
-}
-
-fun kv(key: Any, value: Any) {}
-
-fun kv(key: Any, value: Json.() -> Unit) : Json {
-    val json = Json()
-    json.value()
-    return json;
-}
-
-fun tst() {
-    kv("sheep") {
-
-    }
-}
