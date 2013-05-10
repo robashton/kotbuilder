@@ -20,21 +20,21 @@ public class SomeTest {
 
     spec fun can_create_key_value_pair_with_string() {
         var result = json {
-            "name" eq "rob"
+            "name" .. "rob"
         }
         assertEquals(result, "{\"name\":\"rob\"}")
     }
 
     spec fun can_create_key_value_pair_with_integer() {
         var result = json {
-            "name" eq 1337
+            "name" .. 1337
         }
         assertEquals(result, "{\"name\":1337}")
     }
 
     spec fun can_create_key_value_pair_with_json_value() {
         var result = json {
-            "name" eq {
+            "name" .. {
 
             }
         }
@@ -43,8 +43,8 @@ public class SomeTest {
 
     spec fun can_create_two_key_value_pair_with_strings() {
         var result = json {
-            "name" eq "rob"
-            "name" eq "robbie"
+            "name" .. "rob"
+            "name" .. "robbie"
         }
         assertEquals(result, "{\"name\":\"rob\",\"name\":\"robbie\"}")
     }
@@ -57,4 +57,28 @@ public class SomeTest {
         }
         assertEquals(result, "{\"name\":[\"foo\",1337,{}]}")
     }
+
+    spec fun blah() {
+        "name" .. "whatever"
+    }
+    spec fun amazing_json() {
+        json {
+            "name" .. "Rob Ashton"
+            "age" .. 5
+            "address" .. {
+                "number" .. 444
+                "line one" .. "never you mind"
+            }
+            "family".array(
+                {
+                    "name" .. "Gareth Ashton"
+                    "relation" .. "brother"
+                },
+                {
+                    "name" .. "Suxanne Ashton"
+                    "relation" .. "sister"
+                })
+        }
+    }
 }
+

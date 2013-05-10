@@ -9,7 +9,6 @@
 import java.util.HashMap
 import java.util.List
 import java.util.ArrayList
-import jet.runtime.typeinfo.JetMethod
 import java.util.Arrays
 
 class Json () {
@@ -23,10 +22,6 @@ class Json () {
         hasSeenFields = true
     }
 
-    fun String.eq(value: Int) {
-        insertPotentialComma()
-        builder.append("\"$this\":$value")
-    }
 
     fun String.array(vararg value : Any) {
         insertPotentialComma()
@@ -56,18 +51,25 @@ class Json () {
 
     }
 
+    fun String.rangeTo(value: Int) : Int {
+        insertPotentialComma()
+        builder.append("\"$this\":$value")
+        return 0
+    }
 
-    fun String.eq(content: Json.() -> Unit) {
+    fun String.rangeTo(content: Json.() -> Unit) : Int {
         insertPotentialComma()
         var subObject = Json()
         subObject.content()
         builder.append("\"$this\":${subObject.toString()}")
+        return 0
     }
 
 
-    fun String.eq(a: String) : Unit {
+    fun String.rangeTo(a: String) : Int {
         insertPotentialComma()
         builder.append("\"$this\":\"$a\"")
+        return 0
     }
 
 
